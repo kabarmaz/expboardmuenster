@@ -1,0 +1,23 @@
+{
+  "periods": 5,
+  "total_cells": 2484,
+  "cells_with_growth": 538,
+  "total_new_buildings": 3910,
+  "growth_by_direction": {
+    "E": 364,
+    "N": 196,
+    "NE": 321,
+    "NW": 297,
+    "S": 936,
+    "SE": 889,
+    "SW": 656,
+    "W": 251
+  },
+  "period_dates": [
+    "2023-05-19",
+    "2023-11-15",
+    "2024-05-13",
+    "2024-11-09",
+    "2025-01-01"
+  ]
+}

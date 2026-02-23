@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technical Report | Münster Urban Expansion</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a2e;
+            min-height: 100vh;
+            color: #333;
+        }
+        .nav {
+            background: rgba(255,255,255,0.1);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .nav a { color: #00d2ff; text-decoration: none; font-weight: 600; }
+        .nav a:hover { text-decoration: underline; }
+        .nav span { color: #fff; }
+        .report-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            min-height: calc(100vh - 60px);
+        }
+        .report-content {
+            padding: 60px;
+            line-height: 1.8;
+        }
+        .report-content h1 {
+            font-size: 2.2em;
+            color: #1a1a2e;
+            margin-bottom: 10px;
+            border-bottom: 3px solid #3a7bd5;
+            padding-bottom: 15px;
+        }
+        .report-content h2 {
+            font-size: 1.6em;
+            color: #1a1a2e;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        .report-content h3 {
+            font-size: 1.3em;
+            color: #333;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        .report-content h4 {
+            font-size: 1.1em;
+            color: #444;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+        .report-content p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        .report-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.95em;
+        }
+        .report-content th, .report-content td {
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        .report-content th {
+            background: #f5f7fa;
+            font-weight: 600;
+        }
+        .report-content tr:nth-child(even) {
+            background: #fafafa;
+        }
+        .report-content ul, .report-content ol {
+            margin: 15px 0 15px 30px;
+        }
+        .report-content li {
+            margin-bottom: 8px;
+        }
+        .report-content code {
+            background: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.9em;
+        }
+        .report-content pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        .report-content pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+        }
+        .report-content blockquote {
+            border-left: 4px solid #3a7bd5;
+            padding-left: 20px;
+            margin: 20px 0;
+            color: #555;
+            font-style: italic;
+        }
+        .report-content hr {
+            border: none;
+            border-top: 2px solid #eee;
+            margin: 40px 0;
+        }
+        .executive-summary {
+            background: #f5f7fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #3a7bd5;
+        }
+        .formula {
+            background: #f9f9f9;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-family: 'Times New Roman', serif;
+            font-size: 1.1em;
+            text-align: center;
+            overflow-x: auto;
+        }
+        .toc {
+            background: #f5f7fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+        .toc h3 {
+            margin-top: 0;
+            color: #1a1a2e;
+        }
+        .toc ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .toc li {
+            margin: 8px 0;
+        }
+        .toc a {
+            color: #3a7bd5;
+            text-decoration: none;
+        }
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        .meta-info {
+            color: #666;
+            font-size: 0.95em;
+            margin-bottom: 30px;
+        }
+        .download-btn {
+            display: inline-block;
+            background: linear-gradient(90deg, #3a7bd5, #00d2ff);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 20px;
+        }
+        .download-btn:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="index.html">← Back to Dashboard</a>
+        <span>Technical Report</span>
+    </div>
+
+    <div class="report-container">
+        <div class="report-content">
+            <h1>Urban Expansion Analysis and Forecasting: Münster, Germany</h1>
+            <h2 style="border: none; margin-top: 10px; font-size: 1.2em; color: #666;">Comprehensive Technical Report</h2>
+            
+            <div class="meta-info">
+                <p><strong>Author:</strong> Kazım Baran Yılmaz</p>
+                <p><strong>Date:</strong> February 2026</p>
+                <p><strong>Course:</strong> Analysis of Spatio-Temporal Data</p>
+            </div>
+
+            <a href="../REPORT_Urban_Expansion_Analysis.md" class="download-btn" download>📄 Download Full Report (Markdown)</a>
+
+            <hr>
+
+            <div class="executive-summary">
+                <h3 style="margin-top: 0;">Executive Summary</h3>
+                <p>This report presents a comprehensive analysis of urban expansion patterns in Münster, Germany, spanning from 2015 to 2025. Using OpenStreetMap building footprint data obtained via the ohsome API, we analyzed semiannual growth patterns, identified spatial clusters of development, forecasted future expansion, and estimated environmental impacts including tree canopy loss.</p>
+                
+                <table>
+                    <tr><th>Metric</th><th>Value</th></tr>
+                    <tr><td>Building Stock Growth (2015-2025)</td><td>105,422 → 135,576 (+28.6%)</td></tr>
+                    <tr><td>Primary Expansion Direction</td><td>South/Southeast</td></tr>
+                    <tr><td>Peak Development Zone</td><td>6-10 km from city center</td></tr>
+                    <tr><td>Moran's I (Spatial Clustering)</td><td>0.25 (p < 0.001)</td></tr>
+                    <tr><td>Projected Buildings (2025-2030)</td><td>~4,500 additional</td></tr>
+                    <tr><td>Estimated Canopy Loss (Total)</td><td>79.7 hectares</td></tr>
+                    <tr><td>CO2 Sequestration Impact</td><td>140 tonnes/year</td></tr>
+                </table>
+            </div>
+
+            <div class="toc">
+                <h3>Table of Contents</h3>
+                <ul>
+                    <li><a href="#intro">1. Introduction</a></li>
+                    <li><a href="#methods">2. Data and Methods</a></li>
+                    <li><a href="#results">3. Results</a></li>
+                    <li><a href="#discussion">4. Discussion</a></li>
+                    <li><a href="#implementation">5. Technical Implementation</a></li>
+                    <li><a href="#conclusions">6. Conclusions</a></li>
+                </ul>
+            </div>
+
+            <h2 id="intro">1. Introduction</h2>
+            
+            <h3>1.1 Background</h3>
+            <p>Urban expansion is a critical concern for sustainable city planning. Understanding where and how cities grow enables planners to anticipate infrastructure needs, protect environmentally sensitive areas, optimize land use allocation, and estimate environmental impacts.</p>
+            <p>Münster, a mid-sized German city with approximately 320,000 inhabitants, serves as an ideal case study due to its well-documented OpenStreetMap coverage and characteristic suburban growth patterns.</p>
+
+            <h3>1.2 Objectives</h3>
+            <ol>
+                <li><strong>Detect</strong> semiannual urban growth patterns using OSM building data</li>
+                <li><strong>Analyze</strong> spatial clustering and directional trends</li>
+                <li><strong>Forecast</strong> future development areas</li>
+                <li><strong>Estimate</strong> environmental impacts (tree canopy loss, CO2)</li>
+                <li><strong>Visualize</strong> findings through interactive maps and dashboards</li>
+            </ol>
+
+            <h3>1.3 Study Area</h3>
+            <ul>
+                <li><strong>City:</strong> Münster, North Rhine-Westphalia, Germany</li>
+                <li><strong>Bounding Box:</strong> 7.47°E - 7.77°E, 51.84°N - 52.06°N</li>
+                <li><strong>Area:</strong> ~302 km²</li>
+                <li><strong>Coordinate Systems:</strong> WGS84 (EPSG:4326) for acquisition, UTM 32N (EPSG:25832) for analysis</li>
+            </ul>
+
+            <h2 id="methods">2. Data and Methods</h2>
+
+            <h3>2.1 Data Acquisition</h3>
+            <p>Building footprint data was obtained from the ohsome API, which provides historical OpenStreetMap data through a RESTful interface.</p>
+            
+            <table>
+                <tr><th>Parameter</th><th>Value</th></tr>
+                <tr><td>Endpoint</td><td>/elements/geometry</td></tr>
+                <tr><td>Filter</td><td>building=* and geometry:polygon</td></tr>
+                <tr><td>Temporal Coverage</td><td>21 snapshots (2015-2025)</td></tr>
+                <tr><td>Data Volume</td><td>~1.5 GB GeoJSON</td></tr>
+            </table>
+
+            <h3>2.2 Spatial Analysis Methods</h3>
+            
+            <h4>Global Moran's I</h4>
+            <p>Moran's I statistic measures the degree of spatial clustering:</p>
+            <div class="formula">
+                I = (n / Σᵢ Σⱼ wᵢⱼ) × (Σᵢ Σⱼ wᵢⱼ(xᵢ - x̄)(xⱼ - x̄)) / (Σᵢ (xᵢ - x̄)²)
+            </div>
+            <p>Where n = number of spatial units, wᵢⱼ = spatial weight, xᵢ = attribute value.</p>
+
+            <h4>LISA Clusters</h4>
+            <p>Local Indicators of Spatial Association identify local clusters and outliers:</p>
+            <ul>
+                <li><strong>High-High (HH):</strong> Hot spots - high values surrounded by high values</li>
+                <li><strong>Low-Low (LL):</strong> Cold spots - low values surrounded by low values</li>
+                <li><strong>High-Low (HL):</strong> Spatial outliers</li>
+                <li><strong>Low-High (LH):</strong> Spatial outliers</li>
+            </ul>
+
+            <h3>2.3 Forecasting Methods</h3>
+            <p>An ensemble approach combined three methods:</p>
+            <ol>
+                <li><strong>Linear Trend Extrapolation</strong></li>
+                <li><strong>Exponential Smoothing (Holt's Method)</strong></li>
+                <li><strong>Moving Average</strong></li>
+            </ol>
+            <p>Development potential scoring weighted: Recent growth (35%), Neighbor growth (30%), Trend (20%), Distance (15%).</p>
+
+            <h3>2.4 Environmental Impact Estimation</h3>
+            <div class="formula">
+                Canopy_Loss = Buildings × Footprint × Dev_Multiplier × Canopy_Coverage(zone)
+            </div>
+            <p>Where: Footprint = 150 m², Dev_Multiplier = 1.8×, Canopy_Coverage = 15-55% by zone.</p>
+
+            <h2 id="results">3. Results</h2>
+
+            <h3>3.1 Building Growth</h3>
+            <table>
+                <tr><th>Period</th><th>Total Buildings</th><th>Growth</th></tr>
+                <tr><td>2015-06-30</td><td>105,422</td><td>(baseline)</td></tr>
+                <tr><td>2019-01-01</td><td>131,155</td><td>+24.4%</td></tr>
+                <tr><td>2025-01-01</td><td>135,576</td><td>+28.6%</td></tr>
+            </table>
+
+            <h3>3.2 Spatial Statistics</h3>
+            <p><strong>Global Moran's I:</strong> 0.251 (p < 0.001) — significant spatial clustering</p>
+            <p><strong>LISA Clusters:</strong> 103 High-High hotspots, 815 Low-Low cold spots</p>
+
+            <h3>3.3 Directional Analysis</h3>
+            <p><strong>63.4%</strong> of new development occurred in the southern semicircle (S, SE, SW).</p>
+            <p>Growth centroid shifted <strong>6,576 meters</strong> toward the southwest.</p>
+
+            <h3>3.4 Forecasts</h3>
+            <ul>
+                <li>Predicted new buildings (2025-2030): ~4,500</li>
+                <li>Projected total (2030): ~140,100</li>
+                <li>High-potential development area: 68.8 km²</li>
+            </ul>
+
+            <h3>3.5 Environmental Impact</h3>
+            <table>
+                <tr><th>Metric</th><th>Historical</th><th>Projected</th><th>Total</th></tr>
+                <tr><td>Canopy Loss</td><td>33.5 ha</td><td>46.2 ha</td><td>79.7 ha</td></tr>
+                <tr><td>Trees Lost</td><td>~2,683</td><td>~3,693</td><td>~6,376</td></tr>
+                <tr><td>CO2 Impact</td><td>59 t/yr</td><td>81 t/yr</td><td>140 t/yr</td></tr>
+            </table>
+
+            <h2 id="discussion">4. Discussion</h2>
+            
+            <h3>4.1 Interpretation</h3>
+            <p>The southward suburban expansion aligns with transportation corridor development (A1 highway) and available developable land. The "suburban ring effect" (peak growth at 6-10 km) reflects land availability constraints in the urban core and affordability considerations.</p>
+
+            <h3>4.2 Limitations</h3>
+            <ul>
+                <li>OSM data quality varies spatially</li>
+                <li>Canopy estimates are model-based, not remotely sensed</li>
+                <li>Economic factors not incorporated in forecasts</li>
+            </ul>
+
+            <h3>4.3 Recommendations</h3>
+            <ul>
+                <li>Focus green infrastructure in the southern growth corridor</li>
+                <li>Implement tree preservation ordinances in the 6-10 km zone</li>
+                <li>Establish canopy targets for new developments (e.g., 20% minimum)</li>
+            </ul>
+
+            <h2 id="implementation">5. Technical Implementation</h2>
+            
+            <h3>Software Stack</h3>
+            <table>
+                <tr><th>Component</th><th>Details</th></tr>
+                <tr><td>Python</td><td>3.10</td></tr>
+                <tr><td>GeoPandas</td><td>Spatial data handling</td></tr>
+                <tr><td>libpysal / esda</td><td>Spatial statistics</td></tr>
+                <tr><td>Folium</td><td>Interactive maps</td></tr>
+                <tr><td>statsmodels</td><td>Forecasting</td></tr>
+            </table>
+
+            <h2 id="conclusions">6. Conclusions</h2>
+            <ol>
+                <li><strong>Consistent Growth:</strong> +30,000 buildings (28.6%) over 10 years</li>
+                <li><strong>Southward Expansion:</strong> 63% of development in southern semicircle</li>
+                <li><strong>Spatial Clustering:</strong> Moran's I = 0.25 confirms non-random patterns</li>
+                <li><strong>Suburban Ring Effect:</strong> Peak development at 6-10 km from center</li>
+                <li><strong>Environmental Cost:</strong> Projected 80 hectares of canopy loss by 2030</li>
+            </ol>
+
+            <hr>
+
+            <p style="text-align: center; color: #666; font-style: italic;">
+                Full methodology, complete results tables, and references available in the 
+                <a href="../REPORT_Urban_Expansion_Analysis.md">downloadable Markdown report</a>.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

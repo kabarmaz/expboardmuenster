@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Growth Analysis | Münster Urban Expansion</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            color: #fff;
+        }
+        .nav {
+            background: rgba(255,255,255,0.1);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .nav a {
+            color: #00d2ff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .nav a:hover { text-decoration: underline; }
+        .header {
+            background: rgba(255,255,255,0.05);
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #00d2ff, #3a7bd5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        .section {
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .section h2 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3a7bd5;
+        }
+        .image-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .image-container img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .image-caption {
+            color: #aaa;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+        .description {
+            color: #ccc;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .stat {
+            background: rgba(0,210,255,0.1);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .stat-value { font-size: 1.8em; font-weight: bold; color: #00d2ff; }
+        .stat-label { font-size: 0.85em; color: #aaa; }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="index.html">← Back to Dashboard</a>
+        <span>Growth Analysis</span>
+    </div>
+
+    <div class="header">
+        <h1>📈 Building Growth Analysis</h1>
+        <p>Time series and trend analysis of urban expansion in Münster</p>
+    </div>
+
+    <div class="container">
+        <!-- Key Stats -->
+        <div class="section">
+            <h2>Key Statistics</h2>
+            <div class="stats-row">
+                <div class="stat">
+                    <div class="stat-value">105,422</div>
+                    <div class="stat-label">Buildings (2015)</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">135,576</div>
+                    <div class="stat-label">Buildings (2025)</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">+30,154</div>
+                    <div class="stat-label">New Buildings</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">+28.6%</div>
+                    <div class="stat-label">Total Growth</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Time Series Chart -->
+        <div class="section">
+            <h2>New Buildings Over Time</h2>
+            <p class="description">
+                This chart shows the number of new buildings detected in each semiannual period. 
+                The initial high values (2015-2016) reflect both actual construction and improved 
+                OSM mapping coverage. Recent years show stable growth of approximately 600-1,500 
+                buildings per period.
+            </p>
+            <div class="image-container">
+                <img src="../output/figures/time_series_new_buildings.png" alt="Time Series of New Buildings">
+                <p class="image-caption">Figure 1: Semiannual new building counts (2015-2025)</p>
+            </div>
+        </div>
+
+        <!-- Cumulative Growth -->
+        <div class="section">
+            <h2>Cumulative Growth</h2>
+            <p class="description">
+                The cumulative growth curve demonstrates the steady expansion of Münster's building 
+                stock over the decade. The steeper slope in early years flattens to a more consistent 
+                rate after 2017, indicating stabilization of both mapping activity and construction rates.
+            </p>
+            <div class="image-container">
+                <img src="../output/figures/cumulative_growth.png" alt="Cumulative Building Growth">
+                <p class="image-caption">Figure 2: Cumulative new buildings over time</p>
+            </div>
+        </div>
+
+        <!-- Annual Summary -->
+        <div class="section">
+            <h2>Annual New Buildings</h2>
+            <p class="description">
+                Annual aggregation provides a clearer view of year-over-year trends, smoothing out 
+                seasonal variations. The chart shows consistent annual additions ranging from 
+                ~2,000-4,000 buildings in recent years.
+            </p>
+            <div class="image-container">
+                <img src="../output/figures/annual_new_buildings.png" alt="Annual New Buildings">
+                <p class="image-caption">Figure 3: Annual new building totals by year</p>
+            </div>
+        </div>
+
+        <!-- Hotspot Map -->
+        <div class="section">
+            <h2>Spatial Distribution</h2>
+            <p class="description">
+                The hotspot map reveals where new construction is concentrated. Warmer colors indicate 
+                higher densities of new buildings. The southern and southeastern suburbs show 
+                particularly high development activity.
+            </p>
+            <div class="image-container">
+                <img src="../output/figures/hotspot_map.png" alt="Building Growth Hotspot Map">
+                <p class="image-caption">Figure 4: Spatial distribution of new buildings (500m grid)</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

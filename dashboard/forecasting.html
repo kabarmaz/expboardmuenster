@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forecasting | Münster Urban Expansion</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            color: #fff;
+        }
+        .nav {
+            background: rgba(255,255,255,0.1);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .nav a { color: #00d2ff; text-decoration: none; font-weight: 600; }
+        .nav a:hover { text-decoration: underline; }
+        .header {
+            background: rgba(255,255,255,0.05);
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #00d2ff, #3a7bd5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        .section {
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .section h2 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3a7bd5;
+        }
+        .image-container { text-align: center; margin: 20px 0; }
+        .image-container img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .image-caption { color: #aaa; font-size: 0.9em; margin-top: 10px; }
+        .description { color: #ccc; line-height: 1.8; margin-bottom: 20px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        th { background: rgba(0,210,255,0.1); }
+        .method-box {
+            background: rgba(0,0,0,0.3);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+        .method-box h4 { color: #00d2ff; margin-bottom: 10px; }
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .stat {
+            background: rgba(0,210,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .stat-value { font-size: 2em; font-weight: bold; color: #00d2ff; }
+        .stat-label { font-size: 0.85em; color: #aaa; margin-top: 5px; }
+        .interpretation {
+            background: rgba(58,123,213,0.2);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #3a7bd5;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="index.html">← Back to Dashboard</a>
+        <span>Forecasting</span>
+    </div>
+
+    <div class="header">
+        <h1>🔮 Growth Forecasting</h1>
+        <p>Time series predictions and spatial development potential analysis</p>
+    </div>
+
+    <div class="container">
+        <!-- Forecast Summary -->
+        <div class="section">
+            <h2>5-Year Projections (2025-2030)</h2>
+            <div class="stats-row">
+                <div class="stat">
+                    <div class="stat-value">~4,500</div>
+                    <div class="stat-label">Predicted New Buildings</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">140,100</div>
+                    <div class="stat-label">Total Buildings (2030)</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">+3.3%</div>
+                    <div class="stat-label">Growth Rate</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">~900/yr</div>
+                    <div class="stat-label">Annual New Buildings</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Methodology -->
+        <div class="section">
+            <h2>Forecasting Methodology</h2>
+            <p class="description">
+                Three forecasting methods were combined into an ensemble for robust predictions:
+            </p>
+            <div class="method-box">
+                <h4>1. Linear Trend Extrapolation</h4>
+                <p>Fits a linear regression to recent data and projects forward. Captures overall direction.</p>
+            </div>
+            <div class="method-box">
+                <h4>2. Exponential Smoothing (Holt's Method)</h4>
+                <p>Weights recent observations more heavily, with adaptive trend components.</p>
+            </div>
+            <div class="method-box">
+                <h4>3. Moving Average</h4>
+                <p>Averages the last 4 periods for a stable baseline estimate.</p>
+            </div>
+            <div class="interpretation">
+                <strong>Ensemble:</strong> Final forecast = (Linear + Exponential + Moving Average) / 3
+            </div>
+        </div>
+
+        <!-- Time Series Forecast -->
+        <div class="section">
+            <h2>Time Series Forecast</h2>
+            <table>
+                <tr><th>Period</th><th>Linear</th><th>Exp. Smooth</th><th>Simple Avg</th><th>Ensemble</th></tr>
+                <tr><td>2025-07</td><td>647</td><td>210</td><td>660</td><td><strong>506</strong></td></tr>
+                <tr><td>2026-01</td><td>629</td><td>71</td><td>660</td><td><strong>453</strong></td></tr>
+                <tr><td>2026-07</td><td>610</td><td>0</td><td>660</td><td><strong>424</strong></td></tr>
+                <tr><td>2027-01</td><td>592</td><td>0</td><td>660</td><td><strong>417</strong></td></tr>
+            </table>
+            <div class="image-container">
+                <img src="../output/forecasting/forecast_analysis.png" alt="Forecast Analysis">
+                <p class="image-caption">Figure 1: Time series forecast with historical data and projections</p>
+            </div>
+        </div>
+
+        <!-- Spatial Prediction -->
+        <div class="section">
+            <h2>Spatial Development Potential</h2>
+            <p class="description">
+                Future development locations were predicted using a composite score based on:
+            </p>
+            <ul style="color: #ccc; margin: 15px 0 15px 30px; line-height: 2;">
+                <li><strong>Recent growth activity (35%)</strong> - Areas with recent construction</li>
+                <li><strong>Neighbor growth (30%)</strong> - Spatial spillover effects</li>
+                <li><strong>Growth trend (20%)</strong> - Accelerating vs decelerating patterns</li>
+                <li><strong>Distance factor (15%)</strong> - Suburban ring premium (3-10km optimal)</li>
+            </ul>
+            <table>
+                <tr><th>Potential Class</th><th>Cells</th><th>Area (km²)</th></tr>
+                <tr style="background: rgba(227,26,28,0.2);"><td>Very High</td><td>104</td><td>26.0</td></tr>
+                <tr style="background: rgba(253,141,60,0.2);"><td>High</td><td>171</td><td>42.8</td></tr>
+                <tr style="background: rgba(254,204,92,0.2);"><td>Moderate</td><td>320</td><td>80.0</td></tr>
+                <tr><td>Low</td><td>1,889</td><td>472.3</td></tr>
+            </table>
+            <div class="image-container">
+                <img src="../output/growth_prediction/growth_prediction_maps.png" alt="Prediction Maps">
+                <p class="image-caption">Figure 2: Multi-panel development potential analysis</p>
+            </div>
+            <div class="image-container">
+                <img src="../output/growth_prediction/growth_direction_prediction.png" alt="Direction Prediction">
+                <p class="image-caption">Figure 3: Predicted growth directions from city center</p>
+            </div>
+        </div>
+
+        <!-- Key Findings -->
+        <div class="section">
+            <h2>Key Predictions</h2>
+            <div class="interpretation">
+                <ul style="line-height: 2;">
+                    <li>🎯 <strong>275 grid cells</strong> classified as high development potential</li>
+                    <li>📍 Primary growth direction: <strong>South (S)</strong></li>
+                    <li>📏 Hot distance zone: <strong>6-10 km</strong> from city center</li>
+                    <li>🏗️ Estimated new buildings per period: <strong>~450</strong></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

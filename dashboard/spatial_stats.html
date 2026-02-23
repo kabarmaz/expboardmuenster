@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spatial Statistics | Münster Urban Expansion</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            color: #fff;
+        }
+        .nav {
+            background: rgba(255,255,255,0.1);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .nav a { color: #00d2ff; text-decoration: none; font-weight: 600; }
+        .nav a:hover { text-decoration: underline; }
+        .header {
+            background: rgba(255,255,255,0.05);
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #00d2ff, #3a7bd5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        .section {
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .section h2 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3a7bd5;
+        }
+        .image-container { text-align: center; margin: 20px 0; }
+        .image-container img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .image-caption { color: #aaa; font-size: 0.9em; margin-top: 10px; }
+        .description { color: #ccc; line-height: 1.8; margin-bottom: 20px; }
+        .formula {
+            background: rgba(0,0,0,0.3);
+            padding: 20px;
+            border-radius: 10px;
+            font-family: monospace;
+            text-align: center;
+            margin: 20px 0;
+            font-size: 1.1em;
+        }
+        .interpretation {
+            background: rgba(58,123,213,0.2);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #3a7bd5;
+            margin: 20px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        th { background: rgba(0,210,255,0.1); }
+        .cluster-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .cluster-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .cluster-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="index.html">← Back to Dashboard</a>
+        <span>Spatial Statistics</span>
+    </div>
+
+    <div class="header">
+        <h1>📊 Spatial Statistics Analysis</h1>
+        <p>Moran's I, LISA clusters, and directional growth patterns</p>
+    </div>
+
+    <div class="container">
+        <!-- Global Moran's I -->
+        <div class="section">
+            <h2>Global Moran's I (Spatial Autocorrelation)</h2>
+            <p class="description">
+                Moran's I measures the degree to which similar values cluster together in space. 
+                A positive value indicates clustering, while negative indicates dispersion.
+            </p>
+            <div class="formula">
+                I = (n / Σᵢ Σⱼ wᵢⱼ) × (Σᵢ Σⱼ wᵢⱼ(xᵢ - x̄)(xⱼ - x̄)) / (Σᵢ (xᵢ - x̄)²)
+            </div>
+            <table>
+                <tr><th>Period</th><th>Moran's I</th><th>Z-score</th><th>p-value</th><th>Interpretation</th></tr>
+                <tr><td>2023-05-19</td><td>0.149</td><td>14.57</td><td>0.001</td><td>Clustered</td></tr>
+                <tr><td>2023-11-15</td><td>0.140</td><td>14.30</td><td>0.001</td><td>Clustered</td></tr>
+                <tr><td>2024-05-13</td><td>0.190</td><td>21.59</td><td>0.001</td><td>Clustered</td></tr>
+                <tr><td>2024-11-09</td><td>0.137</td><td>15.52</td><td>0.001</td><td>Clustered</td></tr>
+                <tr><td>2025-01-01</td><td>0.115</td><td>13.23</td><td>0.002</td><td>Clustered</td></tr>
+                <tr style="background: rgba(0,210,255,0.1);"><td><strong>Total</strong></td><td><strong>0.251</strong></td><td><strong>24.84</strong></td><td><strong>0.001</strong></td><td><strong>Clustered</strong></td></tr>
+            </table>
+            <div class="interpretation">
+                <strong>Finding:</strong> All periods show statistically significant spatial clustering (p < 0.01). 
+                The overall Moran's I of 0.25 indicates moderate positive autocorrelation — new buildings 
+                tend to cluster together rather than distribute randomly across the city.
+            </div>
+            <div class="image-container">
+                <img src="../output/spatial_stats/morans_i_time_series.png" alt="Moran's I Time Series">
+                <p class="image-caption">Figure 1: Moran's I values across time periods</p>
+            </div>
+        </div>
+
+        <!-- LISA Clusters -->
+        <div class="section">
+            <h2>Local Indicators of Spatial Association (LISA)</h2>
+            <p class="description">
+                LISA identifies local spatial clusters and outliers by comparing each location 
+                to its neighbors. This reveals where hot spots and cold spots of development occur.
+            </p>
+            <div class="cluster-legend">
+                <div class="cluster-item"><div class="cluster-color" style="background: #d7191c;"></div><span>High-High (Hot Spots)</span></div>
+                <div class="cluster-item"><div class="cluster-color" style="background: #2c7bb6;"></div><span>Low-Low (Cold Spots)</span></div>
+                <div class="cluster-item"><div class="cluster-color" style="background: #fdae61;"></div><span>High-Low (Outliers)</span></div>
+                <div class="cluster-item"><div class="cluster-color" style="background: #abd9e9;"></div><span>Low-High (Outliers)</span></div>
+                <div class="cluster-item"><div class="cluster-color" style="background: #eeeeee;"></div><span>Not Significant</span></div>
+            </div>
+            <table>
+                <tr><th>Cluster Type</th><th>Count</th><th>Percentage</th><th>Description</th></tr>
+                <tr><td>Not Significant</td><td>1,498</td><td>60.3%</td><td>No clear spatial pattern</td></tr>
+                <tr><td>Low-Low</td><td>815</td><td>32.8%</td><td>Stable areas with low growth</td></tr>
+                <tr><td>High-High</td><td>103</td><td>4.1%</td><td>Development hotspots</td></tr>
+                <tr><td>Low-High</td><td>51</td><td>2.1%</td><td>Low growth near active areas</td></tr>
+                <tr><td>High-Low</td><td>17</td><td>0.7%</td><td>Isolated development</td></tr>
+            </table>
+            <div class="interpretation">
+                <strong>Finding:</strong> 103 High-High clusters identify concentrated development hotspots, 
+                primarily in the southern suburban ring. 815 Low-Low clusters represent stable core areas 
+                with minimal new construction.
+            </div>
+            <div class="image-container">
+                <img src="../output/spatial_stats/lisa_cluster_map.png" alt="LISA Cluster Map">
+                <p class="image-caption">Figure 2: LISA cluster classification map</p>
+            </div>
+        </div>
+
+        <!-- Directional Analysis -->
+        <div class="section">
+            <h2>Growth Directionality</h2>
+            <p class="description">
+                Directional analysis examines where growth is occurring relative to the city center 
+                (Dom/Prinzipalmarkt). This reveals the dominant expansion vectors.
+            </p>
+            <table>
+                <tr><th>Direction</th><th>New Buildings</th><th>% of Total</th></tr>
+                <tr style="background: rgba(0,210,255,0.1);"><td><strong>South (S)</strong></td><td><strong>936</strong></td><td><strong>23.9%</strong></td></tr>
+                <tr style="background: rgba(0,210,255,0.1);"><td><strong>Southeast (SE)</strong></td><td><strong>889</strong></td><td><strong>22.7%</strong></td></tr>
+                <tr style="background: rgba(0,210,255,0.1);"><td><strong>Southwest (SW)</strong></td><td><strong>656</strong></td><td><strong>16.8%</strong></td></tr>
+                <tr><td>East (E)</td><td>364</td><td>9.3%</td></tr>
+                <tr><td>Northeast (NE)</td><td>321</td><td>8.2%</td></tr>
+                <tr><td>Northwest (NW)</td><td>297</td><td>7.6%</td></tr>
+                <tr><td>West (W)</td><td>251</td><td>6.4%</td></tr>
+                <tr><td>North (N)</td><td>196</td><td>5.0%</td></tr>
+            </table>
+            <div class="interpretation">
+                <strong>Finding:</strong> 63.4% of new development occurred in the southern semicircle 
+                (S, SE, SW). The growth centroid shifted 6,576 meters toward the southwest over the study period.
+            </div>
+            <div class="image-container">
+                <img src="../output/spatial_stats/growth_directionality.png" alt="Growth Directionality">
+                <p class="image-caption">Figure 3: Polar chart and directional analysis of urban expansion</p>
+            </div>
+            <div class="image-container">
+                <img src="../output/spatial_stats/direction_map.png" alt="Direction Map">
+                <p class="image-caption">Figure 4: Spatial distribution of growth by direction</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

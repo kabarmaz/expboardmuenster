@@ -1,0 +1,333 @@
+Kazım Baran Yılmaz - 565026 
+
+Student Submission: Urban Expansion Forecasting in Münster (NRW) from OSM + Imagery 
+
+•  Personas: Environmental activists; responsible real-estate investors 
+
+•  Goal: Detect and forecast semiannual urban growth in Münster, visualize growth 
+
+direction on a time slider map, estimate potential tree canopy loss, and surface 
+
+areas for responsible investment. 
+
+1) Data Sources & Metadata 
+
+•  OSM Building Footprints (historical): 
+
+o  Source: HeiGIT ohsome API (https://api.ohsome.org) 
+
+o  Content: building=* polygons with OSM IDs, edit timestamps, geometry 
+
+history 
+
+o  Spatial Resolution: Vector polygons (building scale) 
+
+o  Temporal Resolution: Semiannual snapshots (every 6 months), 2015–2025 
+
+(subject to coverage) 
+
+•  Administrative Boundaries (Münster AOI): 
+
+o  Source: OSM boundary relation; OpenGeoData NRW 
+
+“Verwaltungsgebiete” (Geoportal.NRW) 
+
+o  Content: Münster city polygon (optional regional context) 
+
+o  Spatial Resolution: Vector polygons (admin boundary) 
+
+o  Temporal Resolution: Static 
+
+•  High-Resolution Imagery (DL training/validation): 
+
+o  Source: NRW Digitale Orthophotos (DOP10/20) via Geoportal.NRW; 
+
+optionally OpenAerialMap; Sentinel-2 for context 
+
+o  Spatial Resolution: DOP ~10–20 cm; Sentinel-2 10 m (context only) 
+
+o  Temporal Resolution: Orthophotos every ~1–3 years; Sentinel-2 monthly 
+
+•  Building Footprint Reference (weak labels/QA): 
+
+o  Source: Microsoft/Meta Global ML Building Footprints 
+
+1 
+
+ 
+ 
+Kazım Baran Yılmaz - 565026 
+
+o  Spatial Resolution: Vector polygons 
+
+o  Temporal Resolution: Static (production year) 
+
+•  Tree/Canopy & Land Cover (environmental impact): 
+
+o  Source: Stadt Münster Open Data — Baumkataster (tree points, attributes); 
+
+Copernicus Tree Cover Density 2018–2022; ESA WorldCover 2021 
+
+o  Spatial Resolution: Points (Baumkataster), rasters (10 m) 
+
+o  Temporal Resolution: Baumkataster periodic updates; TCD annual; 
+
+WorldCover epochal 
+
+•  Terrain & Accessibility (optional features): 
+
+o  Source: SRTM/ALOS DEM (30 m), WorldPop (100 m), OSM roads/transit 
+
+o  Temporal Resolution: DEM static; WorldPop annual; OSM rolling updates 
+
+•  Study Area & CRS: 
+
+o  AOI: Münster city boundary buffered ~2–5 km (peri-urban fringe) 
+
+o  CRS: EPSG:25832 (ETRS89 / UTM 32N) for analysis 
+
+2) Exploratory Data Analysis 
+
+•  Data Loading & Cleaning: 
+
+o  Confirm ohsome access with semiannual time steps; harmonize attribute 
+
+names and timestamps 
+
+o  Validate geometry (fix self-intersections), deduplicate carried-over 
+
+polygons, ensure consistent OSM IDs across snapshots 
+
+•  “New vs. Old” Tagging: 
+
+o  Mark buildings as “new” at time t if present at t and absent at t-1 (by OSM 
+
+ID; fallback to spatial novelty within tolerance) 
+
+•  Aggregation Grid: 
+
+o  Create a fishnet (250–500 m) covering AOI; compute per-period new 
+
+building counts/areas per cell 
+
+2 
+
+ 
+ 
+Kazım Baran Yılmaz - 565026 
+
+•  Preliminary Visuals (placeholders): 
+
+o  Time Series: Line plot of new buildings per 6-month period (2015–2025) 
+
+o  Spatial Distribution: Map (choropleth/hexbin) of new-building density for 
+
+recent periods 
+
+o  Growth Direction: Polar histogram of azimuths; arrows showing centroid 
+
+shifts 
+
+o  Environmental Overlay: New growth overlaid on canopy layers to 
+
+highlight potential conflict areas 
+
+3) Analysis Plan & Methodology 
+
+•  Libraries/Packages: 
+
+o  Data/Viz: pandas, geopandas, shapely, pyproj, matplotlib/seaborn/plotly, 
+
+folium/leafmap/kepler.gl, tqdm 
+
+o  Rasters/GIS: rasterio, rioxarray, contextily 
+
+o  Spatial Stats: PySAL (esda, libpysal, mapclassify, spreg), statsmodels 
+
+o  ML/Forecasting: scikit-learn, xgboost/lightgbm (optional), prophet 
+
+(optional) 
+
+o  DL Segmentation: PyTorch, segmentation_models_pytorch, 
+
+albumentations, torchgeo (optional) 
+
+o  Access: requests (ohsome API) 
+
+•  Spatial Statistics: 
+
+o  Global Moran’s I on grid new-building density per period to assess spatial 
+
+dependence 
+
+o  Local Moran’s I and Getis–Ord Gi* to detect hot/cold spots; evaluate 
+
+hotspot stability over time 
+
+o  Growth Directionality via PCA on new-building centroids; summarize 
+
+predominant axes 
+
+3 
+
+ 
+ 
+ 
+Kazım Baran Yılmaz - 565026 
+
+•  Time-Series & Spatiotemporal Forecasting (6-month cadence): 
+
+o  Target: New-building count/area per grid cell per period 
+
+o  Features: Lagged counts, spatial lag (queen/rook), distance to 
+
+CBD/roads/transit, slope/elevation, built-up fraction, land cover/canopy, 
+
+zoning (if available) 
+
+o  Models: 
+
+▪  SARIMAX per cell (temporal structure with exogenous variables) 
+
+▪  Spatial Lag/Error models (PySAL spreg) to capture spatial 
+
+dependence 
+
+▪  Gradient Boosting (XGBoost/LightGBM) for 
+
+classification/regression of new growth probability/amount 
+
+o  Validation: Rolling-origin evaluation; spatial CV on held-out tiles; metrics 
+
+RMSE/MAE (counts), PR/AUC (classification) 
+
+•  Deep Learning (Footprint Extraction from DOP): 
+
+o  Data Prep: Tile DOP imagery (512–1024 px), create masks from 
+
+OSM/Global ML footprints (weak labels), hand-correct subset 
+
+o  Model: U-Net/DeepLabV3+ (SMP) with ResNet/EfficientNet encoders; 
+
+augmentations with albumentations 
+
+o  Post-processing: Threshold, morph ops, polygonization, simplification, 
+
+min-area filters; optional snapping/aligning to OSM 
+
+o 
+
+Integration: Use DL footprints to validate/fill gaps in OSM time series 
+
+•  Environmental Impact: 
+
+o 
+
+Intersect predicted/observed new polygons with tree canopy 
+
+(TCD/WorldCover) and Baumkataster 
+
+o  Estimate canopy area impacted; approximate tree counts via local 
+
+crown-area assumptions; aggregate by neighborhood/grid 
+
+4 
+
+ 
+ 
+ 
+Kazım Baran Yılmaz - 565026 
+
+•  Responsible Investment: 
+
+o  Suitability index combining growth probability, infrastructure proximity, 
+
+environmental sensitivity (canopy conflict), and built-up fraction 
+
+o  Highlight “high-growth, low-conflict” cells as responsible investment 
+
+candidates 
+
+•  Uncertainty: 
+
+o  Spatial bootstrap CV; SARIMAX prediction intervals; Monte Carlo on 
+
+canopy-loss assumptions 
+
+o  Sensitivity: grid size, time step, feature sets 
+
+4) Final Submission Outline 
+
+• 
+
+Interactive Dashboard (Leaflet/kepler.gl/folium with time slider): 
+
+o  Time Slider Map: Semiannual snapshots, animated new buildings, growth 
+
+direction vectors, hotspot overlays 
+
+o  Trends & Forecasts: Time-series plots, forecast trajectories with confidence 
+
+bands, feature importance 
+
+o  Spatial Statistics: Global Moran’s I per period; Local Moran’s I/Gi* maps; 
+
+hotspot stability 
+
+o  Environmental Impact: Estimated canopy loss by grid/neighborhood; 
+
+assumptions and uncertainty ranges; “avoid areas” 
+
+o  Responsible Investment: Suitability index map and shortlist with rationale 
+
+•  Report (PDF): 
+
+o  Executive Summary; Data & Methods; EDA; Spatial/Temporal Models; DL 
+
+Pipeline; Results; Environmental & Investment Insights; Limitations; 
+
+Appendix (API queries, hyperparameters, metrics) 
+
+5 
+
+ 
+ 
+ 
+ 
+ 
+Kazım Baran Yılmaz - 565026 
+
+5) Challenges & Limitations 
+
+•  OSM Completeness & Dating: Edit latency and inconsistent coverage; rely on 
+
+presence/absence between snapshots with spatial tolerance 
+
+• 
+
+Imagery Availability & Licensing: DOP coverage by flight year; confirm licensing 
+
+for redistribution 
+
+•  Temporal Misalignment: OSM edit timestamps vs orthophoto capture dates; 
+
+adopt buffers and document uncertainty 
+
+•  Model Bias & Generalization: DL underperformance in dense/occluded/informal 
+
+areas; mitigate with local fine-tuning and spatial CV 
+
+•  Environmental Estimation: Tree counts from canopy area depend on 
+
+species/crown sizes; report ranges and perform sensitivity analyses 
+
+•  Compute & Storage: DL training and tiling require GPU and disk; batch by AOI 
+
+and cache tiles; consider cloud if needed 
+
+6 
+
+ 
+ 
+ 
+

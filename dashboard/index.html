@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Münster Urban Expansion Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            color: #fff;
+        }
+        .header {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #00d2ff, #3a7bd5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .header p {
+            color: #aaa;
+            font-size: 1.1em;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        .section-title {
+            font-size: 1.5em;
+            margin-bottom: 25px;
+            padding-left: 15px;
+            border-left: 4px solid #3a7bd5;
+            color: #fff;
+        }
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+        .card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        .card-icon {
+            font-size: 3em;
+            padding: 30px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(58,123,213,0.3), rgba(0,210,255,0.3));
+        }
+        .card-content {
+            padding: 25px;
+        }
+        .card-content h3 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+        .card-content p {
+            color: #aaa;
+            font-size: 0.95em;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .card-link {
+            display: inline-block;
+            padding: 10px 25px;
+            background: linear-gradient(90deg, #3a7bd5, #00d2ff);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: opacity 0.3s;
+        }
+        .card-link:hover {
+            opacity: 0.8;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+        .stat-box {
+            background: rgba(255,255,255,0.05);
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .stat-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            background: linear-gradient(90deg, #00d2ff, #3a7bd5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .stat-label {
+            color: #aaa;
+            margin-top: 5px;
+        }
+        .footer {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🏙️ Münster Urban Expansion Dashboard</h1>
+        <p>Spatio-Temporal Analysis of Building Growth (2015-2025) | Kazım Baran Yılmaz</p>
+    </div>
+
+    <div class="container">
+        <!-- Key Statistics -->
+        <h2 class="section-title">Key Statistics</h2>
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="stat-value">135,576</div>
+                <div class="stat-label">Total Buildings (2025)</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value">+28.6%</div>
+                <div class="stat-label">Growth (2015-2025)</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value">0.25</div>
+                <div class="stat-label">Moran's I (Clustering)</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value">79.7 ha</div>
+                <div class="stat-label">Canopy Loss (Projected)</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value">South</div>
+                <div class="stat-label">Primary Expansion Direction</div>
+            </div>
+        </div>
+
+        <!-- Interactive Maps -->
+        <h2 class="section-title">Interactive Maps</h2>
+        <div class="cards">
+            <div class="card">
+                <div class="card-icon">🗺️</div>
+                <div class="card-content">
+                    <h3>Growth Overview Map</h3>
+                    <p>Explore the spatial distribution of new buildings across Münster with interactive hover details.</p>
+                    <a href="../output/interactive/overview_map.html" class="card-link">Open Map</a>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-icon">⏱️</div>
+                <div class="card-content">
+                    <h3>Time Slider Map</h3>
+                    <p>Animate building growth over time with a temporal slider showing semiannual changes.</p>
+                    <a href="../output/interactive/time_slider_map.html" class="card-link">Open Map</a>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-icon">🧭</div>
+                <div class="card-content">
+                    <h3>Direction Analysis Map</h3>
+                    <p>View growth patterns by cardinal direction from the city center.</p>
+                    <a href="../output/interactive/direction_map.html" class="card-link">Open Map</a>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-icon">🌳</div>
+                <div class="card-content">
+                    <h3>Canopy Loss Map</h3>
+                    <p>Visualize estimated tree canopy loss from urban development.</p>
+                    <a href="../output/canopy_analysis/canopy_loss_map.html" class="card-link">Open Map</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analysis Pages -->
+        <h2 class="section-title">Analysis & Visualizations</h2>
+        <div class="cards">
+            <div class="card">
+                <div class="card-icon">📈</div>
+                <div class="card-content">
+                    <h3>Growth Analysis</h3>
+                    <p>Time series charts, cumulative growth, and annual building statistics.</p>
+                    <a href="growth_analysis.html" class="card-link">View Analysis</a>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-icon">📊</div>
+                <div class="card-content">
+                    <h3>Spatial Statistics</h3>
+                    <p>Moran's I, LISA clusters, and spatial autocorrelation analysis.</p>
+                    <a href="spatial_stats.html" class="card-link">View Analysis</a>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-icon">🔮</div>
+                <div class="card-content">
+                    <h3>Forecasting</h3>
+                    <p>Time series forecasts and development potential predictions.</p>
+                    <a href="forecasting.html" class="card-link">View Analysis</a>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-icon">🌲</div>
+                <div class="card-content">
+                    <h3>Environmental Impact</h3>
+                    <p>Canopy loss estimation, tree count, and CO2 sequestration analysis.</p>
+                    <a href="environment.html" class="card-link">View Analysis</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Documentation -->
+        <h2 class="section-title">Documentation</h2>
+        <div class="cards">
+            <div class="card">
+                <div class="card-icon">📄</div>
+                <div class="card-content">
+                    <h3>Technical Report</h3>
+                    <p>Comprehensive methodology, results, and discussion of the urban expansion analysis.</p>
+                    <a href="report.html" class="card-link">Read Report</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Urban Expansion Analysis | Münster, Germany | February 2026</p>
+        <p>Data Source: OpenStreetMap via ohsome API</p>
+    </div>
+</body>
+</html>

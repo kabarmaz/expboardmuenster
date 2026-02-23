@@ -1,0 +1,5 @@
+{
+  "time": "2017-06-19/2017-12-16",
+  "filter": "building=*",
+  "format": "geojson"
+}
