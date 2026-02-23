@@ -1,6 +1,0 @@
-{
-  "timestamp" : "2026-01-22T16:03:06.045524381",
-  "status" : 400,
-  "message" : "Unsupported content-type header found. Please make sure to use either 'multipart/form-data' or 'application/x-www-form-urlencoded'.",
-  "requestUrl" : "https://api.ohsome.org/v1/elements/count"
-}
